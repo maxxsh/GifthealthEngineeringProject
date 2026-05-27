@@ -99,7 +99,7 @@ export function parseInput(input: string): PrescriptionEvent[] {
 }
 
 function readInput(): string {
-  const fileName = process.argv[3];
+  const fileName = process.argv[2];
 
   return fs.readFileSync(fileName, "utf8");
 }
