@@ -1,5 +1,5 @@
-import { parseLine, processEvents } from "./app";
-import { PrescriptionEvent } from "./types";
+import { formatReport, parseLine, processEvents } from "./app";
+import { PatientSummary, PrescriptionEvent } from "./types";
 
 function expectEqual(
   actual: unknown,
@@ -72,4 +72,12 @@ expectEqual(
     { patientName: "John", totalFills: 0, income: -1 },
   ],
   "processes sample events",
+);
+
+expectEqual(
+  formatReport(processEvents(sampleEvents)),
+  `Mark: 2 fills $9 income
+John: 0 fills -$1 income
+Nick: 0 fills $0 income`,
+  "formats sample report",
 );
