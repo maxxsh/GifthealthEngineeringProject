@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { PrescriptionEvent, EventName, PatientSummary } from "./types";
 
 const VALID_EVENTS: EventName[] = ["created", "filled", "returned"];
@@ -88,4 +89,30 @@ export function formatReport(summaries: PatientSummary[]): string {
       )} income`;
     })
     .join("\n");
+}
+//parses input string into array of PrescriptionEvent objects
+export function parseInput(input: string): PrescriptionEvent[] {
+  return input
+    .split(/\r?\n/)
+    .map(parseLine)
+    .filter((event): event is PrescriptionEvent => event !== null);
+}
+
+function readInput(): string {
+  const fileName = process.argv[3];
+
+  return fs.readFileSync(fileName, "utf8");
+}
+
+function main(): void {
+  const input = readInput();
+  const events = parseInput(input);
+  const summaries = processEvents(events);
+  const report = formatReport(summaries);
+
+  console.log(report);
+}
+
+if (require.main === module) {
+  main();
 }
