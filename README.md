@@ -10,7 +10,7 @@ npm install
 
 ## Run
 
-npx ts-node cli.ts input.txt
+npm start input.txt
 
 or
 Git Bash or WSL:
@@ -19,7 +19,7 @@ cat input.txt | npx ts-node cli.ts
 ## Test
 
 ```bash
-npx ts-node test.ts
+npm test
 
 ## Structure
 
