@@ -22,11 +22,18 @@ Run with stdin:
 cat input.txt | npx ts-node cli.ts
 ```
 
-## What the code does
+## Design notes
 
-The input is one event per line. Each line has a patient name, a drug name, and an event type.
+I tried to keep this small, but still organized by responsibility.
 
-The program keeps track of each prescription by using the patient name plus drug name as a unique key. That lets it know which events belong together.
+The CLI code is separate from the business logic. `cli.ts` only reads from a file/stdin and prints the result.
+
+`app.ts` handles parsing, event processing, and report formatting.
+`test.ts` checks the main behavior.
+
+The core logic works with plain strings and objects, which makes it easier to test without touching the file system.
+
+I also added stdin support because the project asks for both file input and piped input. That makes the tool work like a normal command line program.
 
 I used a few basic data structures:
 
@@ -34,17 +41,18 @@ I used a few basic data structures:
 - `Map` to track active fills for each prescription
 - `Map` again to store the summary for each patient
 
-This was enough for the problem and it keeps the logic pretty direct.
+This gives simple and fast lookups while keeping the code easy to follow. The processor works in one pass over the input events, so the time complexity is O(n).
 
-## Design notes
+I did not add controllers, repositories, or dependency injection because this is a small CLI tool, not a web app or database-backed service. Adding those layers here would make the code more complex without much benefit.
 
-I split the code into small pieces.
+If this project became bigger, I would split the source folder more clearly:
 
-`app.ts` handles parsing, event processing, and report formatting. `cli.ts` only reads input and prints output. `test.ts` checks the main behavior.
+- `parser.ts` for parsing and validation
+- `processor.ts` for prescription event rules
+- `reporter.ts` for output formatting
+- separate unit and integration tests
 
-That split helps because the business logic can be tested without the CLI, and the CLI stays very small.
-
-I also added stdin support because the project asks for both file input and piped input. That makes the tool work like a normal command line program.
+For bigger input files, I would also change the CLI to stream the file line by line instead of reading everything into memory. For stronger validation, I would collect invalid lines and print a clear error report instead of just skipping them.
 
 ## Sorting
 
