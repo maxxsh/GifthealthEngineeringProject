@@ -1,5 +1,37 @@
 # Gifthealth Engineering Project
 
+TypeScript CLI for processing prescription events and printing patient totals.
+
+## Run
+
+````bash
+npm install
+npx ts-node cli.ts input.txt
+
+## Test
+
+```bash
+npx ts-node test.ts
+
+## Structure
+
+types.ts  - shared types
+app.ts    - parsing, event logic, report formatting
+cli.ts    - file/stdin reading and stdout
+test.ts   - simple tests
+
+
+
+
+
+
+
+
+
+
+
+
+
 For this step in the interview process we're going to ask you to write some code for a small project. You're welcome to use whatever language you want and we _encourage_ you to use the language/tooling that you're most comfortable with. We want to see your technical ability in an environment where you're not limited by unfamiliar language/tooling.
 
 We also ask that you include a README along with your submission explaining the design you chose, any assumptions you made, and notable architecture tradeoffs you landed on. See the "Evaluation Criteria" section for more details.
@@ -34,7 +66,8 @@ The output format should look like: `PatientName TotalFills Income`. See the exp
 
 ### Sample input
 
-```
+````
+
 Nick A created
 Mark B created
 Mark B filled
@@ -46,14 +79,17 @@ Mark B filled
 Paul D filled
 John E filled
 John E returned
+
 ```
 
 ### Expected output
 
 ```
+
 Mark: 2 fills $9 income
 John: 0 fills -$1 income
 Nick: 0 fills $0 income
+
 ```
 
 ## Evaluation Critieria
@@ -70,3 +106,4 @@ We'll specifically be looking at the following aspects:
 - Code readability and understandability
 - Testing strategy
 - Design explanation in README
+```
