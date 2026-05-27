@@ -100,6 +100,9 @@ export function parseInput(input: string): PrescriptionEvent[] {
 
 function readInput(): string {
   const fileName = process.argv[2];
+  if (!fileName) {
+    throw new Error("Please provide an input file name.");
+  }
 
   return fs.readFileSync(fileName, "utf8");
 }
