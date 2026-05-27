@@ -2,11 +2,19 @@
 
 TypeScript CLI for processing prescription events and printing patient totals.
 
-## Run
+## Install
 
 ````bash
 npm install
+
+
+## Run
+
 npx ts-node cli.ts input.txt
+
+or
+Git Bash or WSL:
+cat input.txt | npx ts-node cli.ts
 
 ## Test
 
