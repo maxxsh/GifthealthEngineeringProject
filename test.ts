@@ -1,4 +1,5 @@
-import { parseLine } from "./app";
+import { parseLine, processEvents } from "./app";
+import { PrescriptionEvent } from "./types";
 
 function expectEqual(
   actual: unknown,
@@ -47,4 +48,28 @@ expectEqual(
   parseLine("Mark B unknown"),
   null,
   "returns null for unknown event",
+);
+
+const sampleEvents: PrescriptionEvent[] = [
+  { patientName: "Nick", drugName: "A", eventName: "created" },
+  { patientName: "Mark", drugName: "B", eventName: "created" },
+  { patientName: "Mark", drugName: "B", eventName: "filled" },
+  { patientName: "Mark", drugName: "C", eventName: "filled" },
+  { patientName: "Mark", drugName: "B", eventName: "returned" },
+  { patientName: "John", drugName: "E", eventName: "created" },
+  { patientName: "Mark", drugName: "B", eventName: "filled" },
+  { patientName: "Mark", drugName: "B", eventName: "filled" },
+  { patientName: "Paul", drugName: "D", eventName: "filled" },
+  { patientName: "John", drugName: "E", eventName: "filled" },
+  { patientName: "John", drugName: "E", eventName: "returned" },
+];
+
+expectEqual(
+  processEvents(sampleEvents),
+  [
+    { patientName: "Nick", totalFills: 0, income: 0 },
+    { patientName: "Mark", totalFills: 2, income: 9 },
+    { patientName: "John", totalFills: 0, income: -1 },
+  ],
+  "processes sample events",
 );
