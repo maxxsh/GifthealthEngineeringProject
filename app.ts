@@ -9,7 +9,7 @@ export function parseLine(line: string): PrescriptionEvent | null {
     return null;
   }
 
-  const [patientName, eventName, drugName] = parts;
+  const [patientName, drugName, eventName] = parts;
 
   if (!VALID_EVENTS.includes(eventName as EventName)) {
     return null;
