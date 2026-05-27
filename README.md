@@ -22,7 +22,7 @@ Run with stdin:
 cat input.txt | npx ts-node cli.ts
 ```
 
-## Design notes
+## Design
 
 I tried to keep this small, but still organized by responsibility.
 
@@ -45,16 +45,7 @@ This gives simple and fast lookups while keeping the code easy to follow. The pr
 
 I did not add controllers, repositories, or dependency injection because this is a small CLI tool, not a web app or database-backed service. Adding those layers here would make the code more complex without much benefit.
 
-If this project became bigger, I would split the source folder more clearly:
-
-- `parser.ts` for parsing and validation
-- `processor.ts` for prescription event rules
-- `reporter.ts` for output formatting
-- separate unit and integration tests
-
-For bigger input files, I would also change the CLI to stream the file line by line instead of reading everything into memory. For stronger validation, I would collect invalid lines and print a clear error report instead of just skipping them.
-
-## Sorting
+## Sorting assumption
 
 The sample output shows that the report is not just in input order. I sorted the final report by total fills descending. If two patients have the same fill count, I sort by income ascending.
 
@@ -81,15 +72,20 @@ Another small tradeoff is that the CLI uses simple synchronous file and stdin re
 
 ## Larger production considerations
 
-For bigger files, I would stream input line by line instead of reading the whole file into memory.
+If this project became bigger, I would split the source folder more clearly:
+
+- `parser.ts` for parsing and validation
+- `processor.ts` for prescription event rules
+- `reporter.ts` for output formatting
+- separate unit and integration tests
+
+For bigger input files, I would also change the CLI to stream the file line by line instead of reading everything into memory.
 
 I would also add stronger validation: `MAX_LINE_LENGTH`, clear invalid-line reporting, and maybe strict/lenient modes.
 
 The current prescription key is a simple `patientName:drugName` string. It is good enough for this input format, but with more flexible input I would use a safer key builder.
 
 If more event types were added, I would move event handling into separate handler functions instead of growing one large conditional block.
-
-I kept the code small because this is a small CLI project. The goal was to show clean separation and testability without adding fake enterprise layers.
 
 ## Summary
 
