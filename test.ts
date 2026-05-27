@@ -1,6 +1,6 @@
 import { parseLine } from "./app";
 
-function expectedEqual(
+function expectEqual(
   actual: unknown,
   expected: unknown,
   testName: string,
@@ -15,7 +15,7 @@ function expectedEqual(
   console.log(`${testName} passed.`);
 }
 
-expectedEqual(
+expectEqual(
   parseLine("Mark B filled"),
   {
     patientName: "Mark",
@@ -23,4 +23,28 @@ expectedEqual(
     drugName: "B",
   },
   "parses valid filled event",
+);
+
+expectEqual(
+  parseLine("Nick A created"),
+  {
+    patientName: "Nick",
+    eventName: "created",
+    drugName: "A",
+  },
+  "parses valid created event",
+);
+
+expectEqual(
+  parseLine("Lisa C returned"),
+  { patientName: "Lisa", eventName: "returned", drugName: "C" },
+  "parses valid returned event",
+);
+
+expectEqual(parseLine("bad input"), null, "returns null for invalid line");
+
+expectEqual(
+  parseLine("Mark B unknown"),
+  null,
+  "returns null for unknown event",
 );
