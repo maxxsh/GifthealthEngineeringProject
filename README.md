@@ -28,7 +28,9 @@ I tried to keep this small, but still organized by responsibility.
 
 The CLI code is separate from the business logic. `cli.ts` only reads from a file/stdin and prints the result.
 
-`app.ts` handles parsing, event processing, and report formatting.
+`src/app.ts` handles parsing, event processing, and report formatting.
+`src/cli.ts` only reads from a file/stdin and prints the result.
+`src/types.ts` holds the shared TypeScript types.
 `test.ts` checks the main behavior.
 
 The core logic works with plain strings and objects, which makes it easier to test without touching the file system.

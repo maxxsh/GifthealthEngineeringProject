@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { formatReport, parseInput, processEvents } from "./app";
+
 function readInput(): string {
   const fileName = process.argv[2];
 

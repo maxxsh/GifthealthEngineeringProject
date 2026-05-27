@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "ts-node cli.ts",
+    "start": "ts-node src/cli.ts",
     "test": "ts-node test.ts"
   },
   "dependencies": {

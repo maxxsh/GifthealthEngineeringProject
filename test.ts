@@ -1,5 +1,5 @@
-import { formatReport, parseLine, processEvents } from "./app";
-import { PatientSummary, PrescriptionEvent } from "./types";
+import { formatReport, parseLine, processEvents } from "./src/app";
+import { PatientSummary, PrescriptionEvent } from "./src/types";
 
 function expectEqual(
   actual: unknown,
