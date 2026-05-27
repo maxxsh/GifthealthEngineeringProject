@@ -75,3 +75,17 @@ export function processEvents(events: PrescriptionEvent[]): PatientSummary[] {
 
   return Array.from(summariesByPatient.values());
 }
+
+function formatIncome(income: number): string {
+  return `${income < 0 ? "-" : ""}$${Math.abs(income)}`;
+}
+
+export function formatReport(summaries: PatientSummary[]): string {
+  return summaries
+    .map((summary) => {
+      return `${summary.patientName}: ${summary.totalFills} fills ${formatIncome(
+        summary.income,
+      )} income`;
+    })
+    .join("\n");
+}
