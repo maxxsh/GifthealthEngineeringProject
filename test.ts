@@ -76,8 +76,8 @@ expectEqual(
 
 expectEqual(
   formatReport(processEvents(sampleEvents)),
-  `Mark: 2 fills $9 income
-John: 0 fills -$1 income
-Nick: 0 fills $0 income`,
+  `Nick: 0 fills $0 income
+Mark: 2 fills $9 income
+John: 0 fills -$1 income`,
   "formats sample report",
 );
