@@ -82,6 +82,8 @@ function formatIncome(income: number): string {
 
 export function formatReport(summaries: PatientSummary[]): string {
   return summaries
+    .slice()
+    .sort((a, b) => b.totalFills - a.totalFills || a.income - b.income)
     .map((summary) => {
       return `${summary.patientName}: ${summary.totalFills} fills ${formatIncome(
         summary.income,

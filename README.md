@@ -20,8 +20,11 @@ app.ts    - parsing, event logic, report formatting
 cli.ts    - file/stdin reading and stdout
 test.ts   - simple tests
 
+## Output
 
+### Sorting
 
+I sort the final report by total fills descending, then by income ascending to match the sample output.
 
 
 
