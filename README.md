@@ -79,6 +79,18 @@ The main tradeoff is that the output sorting rule is an assumption from the samp
 
 Another small tradeoff is that the CLI uses simple synchronous file and stdin reads. For this size of tool, that is fine and easier to follow.
 
+## Larger production considerations
+
+For bigger files, I would stream input line by line instead of reading the whole file into memory.
+
+I would also add stronger validation: `MAX_LINE_LENGTH`, clear invalid-line reporting, and maybe strict/lenient modes.
+
+The current prescription key is a simple `patientName:drugName` string. It is good enough for this input format, but with more flexible input I would use a safer key builder.
+
+If more event types were added, I would move event handling into separate handler functions instead of growing one large conditional block.
+
+I kept the code small because this is a small CLI project. The goal was to show clean separation and testability without adding fake enterprise layers.
+
 ## Summary
 
 This solution is small, but it still tries to show basic production habits: separate logic, test the important parts, and document the choices that are not fully spelled out in the prompt.
