@@ -18,7 +18,7 @@ function expectedEqual(
 expectedEqual(
   parseLine("Mark B filled"),
   {
-    patientName: "Mark B",
+    patientName: "Mark",
     eventName: "filled",
     drugName: "B",
   },
