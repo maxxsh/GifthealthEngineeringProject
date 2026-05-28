@@ -19,7 +19,7 @@ npm start -- input.txt
 Run with stdin:
 
 ```bash
-cat input.txt | npx ts-node cli.ts
+cat input.txt | npm start
 ```
 
 ## Design
@@ -49,11 +49,21 @@ I did not add controllers, repositories, or dependency injection because this is
 
 I moved the prescription state helpers into `src/state.ts` so the event rules stay a bit easier to read. That is still a simple design, just split by job.
 
-## Sorting assumption
+## Assumptions
 
-The sample output shows that the report is not just in input order. I sorted the final report by total fills descending. If two patients have the same fill count, I sort by income ascending.
+### Sorting
 
-That was the smallest rule I could use that still matches the example output.
+The sample output shows that the report is not just in input order. I sorted the final report by total fills descending. If two patients have the same fill count, I sort by income ascending. That was the smallest rule I could use that still matches the example output.
+
+### Validation
+
+I assume each valid input line has exactly three space-delimited values: patient name, drug name, and event name. I also assume patient and drug names are simple single tokens and do not contain spaces or special delimiter characters like `:`.
+
+Event names are case-sensitive and only `created`, `filled`, and `returned` are valid.
+
+The final report should include patients who had a valid `created` event, even if they ended with 0 fills.
+
+Money can be stored as whole dollars because the rules only use `$5` and `$1`.
 
 ## Testing
 
@@ -62,7 +72,7 @@ The tests are simple and focused.
 - `parseLine()` is checked with valid and invalid lines
 - `processEvents()` is checked with the sample event list
 - `formatReport()` is checked with the expected output text
-- stdin behavior should be covered with an integration style test that runs the CLI end to end
+- stdin behavior is handled in `src/cli.ts` and can be covered with an integration style test later
 
 I think this is enough for a small project like this. It gives confidence in the core rules without making the test file too heavy.
 
