@@ -11,3 +11,9 @@ export interface PatientSummary {
   totalFills: number;
   income: number;
 }
+
+export interface PrescriptionState {
+  createdPrescriptions: Set<string>;
+  activeFillsByPrescription: Map<string, number>;
+  summariesByPatient: Map<string, PatientSummary>;
+}

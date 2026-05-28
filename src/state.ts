@@ -1,10 +1,4 @@
-import { PatientSummary, PrescriptionEvent } from "./types";
-
-export interface PrescriptionState {
-  createdPrescriptions: Set<string>;
-  activeFillsByPrescription: Map<string, number>;
-  summariesByPatient: Map<string, PatientSummary>;
-}
+import { PatientSummary, PrescriptionEvent, PrescriptionState } from "./types";
 
 export function getPrescriptionKey(event: PrescriptionEvent): string {
   return `${event.patientName}:${event.drugName}`;
