@@ -1,6 +1,6 @@
 # Gifthealth Engineering Project
 
-This is a small TypeScript CLI that reads prescription event data and prints a patient report. I kept the code simple on purpose, but not just as one big function. The goal was to make it easy to read, easy to test, and easy to change later.
+This is a small TypeScript CLI that reads prescription event data and prints a patient report. I kept the code simple on purpose, but still split by responsibility so it stays easy to read and test.
 
 ## How to run
 
@@ -24,18 +24,15 @@ cat input.txt | npm start
 
 ## Design
 
-I tried to keep this small, but still organized by responsibility.
+The code is split by job:
 
-The CLI code is separate from the business logic. `src/cli.ts` only reads from a file/stdin and prints the result.
+- `src/cli.ts` reads input and prints output
+- `src/app.ts` handles parsing, event processing, and report formatting
+- `src/state.ts` keeps the shared prescription state helpers
+- `src/types.ts` holds the shared TypeScript types
+- `test.ts` checks the main behavior
 
-`src/app.ts` handles parsing, event processing, and report formatting.
-`src/state.ts` keeps the shared prescription state helpers in one place.
-`src/types.ts` holds the shared TypeScript types.
-`test.ts` checks the main behavior.
-
-The core logic works with plain strings and objects, which makes it easier to test without touching the file system.
-
-I also added stdin support because the project asks for both file input and piped input. That makes the tool work like a normal command line program.
+The core logic works with plain strings and objects, which keeps testing simple. I also added stdin support because the project asks for both file input and piped input.
 
 I used a few basic data structures:
 
@@ -43,17 +40,15 @@ I used a few basic data structures:
 - `Map` to track active fills for each prescription
 - `Map` again to store the summary for each patient
 
-This gives simple and fast lookups while keeping the code easy to follow. The processor works in one pass over the input events, so the time complexity is O(n).
+This gives simple and fast lookups. The processor works in one pass over the input events, so the time complexity is O(n).
 
-I did not add controllers, repositories, or dependency injection because this is a small CLI tool, not a web app or database-backed service. Adding those layers here would make the code more complex without much benefit.
-
-I moved the prescription state helpers into `src/state.ts` so the event rules stay a bit easier to read. That is still a simple design, just split by job.
+I did not add controllers, repositories, or dependency injection because this is a small CLI tool, not a web app or database-backed service. Adding those layers would make the code more complex without much benefit.
 
 ## Assumptions
 
 ### Sorting
 
-The sample output shows that the report is not just in input order. I sorted the final report by total fills descending. If two patients have the same fill count, I sort by income ascending. That was the smallest rule I could use that still matches the example output.
+The sample output is not in input order, so I sort the final report by total fills descending. If two patients have the same fill count, I sort by income ascending.
 
 ### Validation
 
@@ -67,8 +62,6 @@ Money can be stored as whole dollars because the rules only use `$5` and `$1`.
 
 ## Testing
 
-The tests are simple and focused.
-
 - `parseLine()` is checked with valid and invalid lines
 - `processEvents()` is checked with the sample event list
 - `formatReport()` is checked with the expected output text
@@ -80,9 +73,9 @@ I think this is enough for a small project like this. It gives confidence in the
 
 I chose readability over clever code. I did not try to make a fancy framework or over-engineer the solution.
 
-The main tradeoff is that the output sorting rule is an assumption from the sample, not from the written spec. I documented that in the code and here in the README so it is clear why the report appears in that order.
+The main tradeoff is that the output sorting rule comes from the sample, not from the written spec. I documented that in the code and here in the README so it is clear why the report appears in that order.
 
-Another small tradeoff is that the CLI uses simple synchronous file and stdin reads. For this size of tool, that is fine and easier to follow.
+Another tradeoff is that the CLI uses simple synchronous file and stdin reads. For this size of tool, that is fine and easier to follow.
 
 ## Larger production considerations
 
@@ -103,4 +96,4 @@ If more event types were added, I would move event handling into separate handle
 
 ## Summary
 
-This solution is small, but it still tries to show basic production habits: separate logic, test the important parts, and document the choices that are not fully spelled out in the prompt.
+This solution tries to show basic production habits: separate logic, test the important parts, and document the choices that are not fully spelled out in the prompt.
