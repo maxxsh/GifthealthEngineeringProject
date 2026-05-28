@@ -26,10 +26,10 @@ cat input.txt | npx ts-node cli.ts
 
 I tried to keep this small, but still organized by responsibility.
 
-The CLI code is separate from the business logic. `cli.ts` only reads from a file/stdin and prints the result.
+The CLI code is separate from the business logic. `src/cli.ts` only reads from a file/stdin and prints the result.
 
 `src/app.ts` handles parsing, event processing, and report formatting.
-`src/cli.ts` only reads from a file/stdin and prints the result.
+`src/state.ts` keeps the shared prescription state helpers in one place.
 `src/types.ts` holds the shared TypeScript types.
 `test.ts` checks the main behavior.
 
@@ -46,6 +46,8 @@ I used a few basic data structures:
 This gives simple and fast lookups while keeping the code easy to follow. The processor works in one pass over the input events, so the time complexity is O(n).
 
 I did not add controllers, repositories, or dependency injection because this is a small CLI tool, not a web app or database-backed service. Adding those layers here would make the code more complex without much benefit.
+
+I moved the prescription state helpers into `src/state.ts` so the event rules stay a bit easier to read. That is still a simple design, just split by job.
 
 ## Sorting assumption
 
