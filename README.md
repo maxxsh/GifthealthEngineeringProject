@@ -83,6 +83,8 @@ The main tradeoff is that the output sorting rule comes from the sample, not fro
 
 Another tradeoff is that the CLI uses simple synchronous file and stdin reads. For this size of tool, that is fine and easier to follow.
 
+I used a small custom test file instead of a full test framework.
+
 ## Larger production considerations
 
 If this project became bigger, I would split the source code into clearer modules:
@@ -99,3 +101,5 @@ I would also add stronger validation: `MAX_LINE_LENGTH`, clear invalid-line repo
 The current prescription key is a simple `patientName:drugName` string. It is good enough for this input format, but with more flexible input I would use a safer key builder.
 
 If more event types were added, I would move event handling into separate handler functions instead of growing one large conditional block.
+
+I would use testing library and split tests by module.
