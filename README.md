@@ -85,7 +85,7 @@ Another tradeoff is that the CLI uses simple synchronous file and stdin reads. F
 
 ## Larger production considerations
 
-If this project became bigger, I would split the source folder more clearly:
+If this project became bigger, I would split the source code into clearer modules:
 
 - `parser.ts` for parsing and validation
 - `processor.ts` for prescription event rules
