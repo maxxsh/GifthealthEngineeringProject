@@ -38,7 +38,7 @@ I used a few basic data structures:
 
 - `Set` to remember which prescriptions were created
 - `Map` to track active fills for each prescription
-- `Map` again to store the summary for each patient
+- `Map` to store the summary for each patient
 
 This gives simple and fast lookups. The processor works in one pass over the input events, so the time complexity is O(n).
 
@@ -54,11 +54,17 @@ The sample output is not in input order, so I sort the final report by total fil
 
 I assume each valid input line has exactly three space-delimited values: patient name, drug name, and event name. I also assume patient and drug names are simple single tokens and do not contain spaces or special delimiter characters like `:`.
 
+I assume patient names are unique enough for this input.
+
 Event names are case-sensitive and only `created`, `filled`, and `returned` are valid.
 
 The final report should include patients who had a valid `created` event, even if they ended with 0 fills.
 
 Money can be stored as whole dollars because the rules only use `$5` and `$1`.
+
+### Calculations
+
+I treat a `returned` event as cancelling one previous fill and also applying the `$1` loss. So the income change for a return is `-$6`: `-$5` to remove the old fill income, and `-$1` for the return loss.
 
 ## Testing
 
@@ -93,7 +99,3 @@ I would also add stronger validation: `MAX_LINE_LENGTH`, clear invalid-line repo
 The current prescription key is a simple `patientName:drugName` string. It is good enough for this input format, but with more flexible input I would use a safer key builder.
 
 If more event types were added, I would move event handling into separate handler functions instead of growing one large conditional block.
-
-## Summary
-
-This solution tries to show basic production habits: separate logic, test the important parts, and document the choices that are not fully spelled out in the prompt.
