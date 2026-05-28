@@ -6,7 +6,10 @@ function readInput(): string {
 
   if (fileName) {
     if (!fs.existsSync(fileName)) {
-      console.log(`Input file not found: ${fileName}`);
+      console.error(
+        "\x1b[31m%s\x1b[0m",
+        `Error: Input file not found: ${fileName}`,
+      );
       process.exit(1);
     }
     return fs.readFileSync(fileName, "utf8");
@@ -16,7 +19,10 @@ function readInput(): string {
     return fs.readFileSync(0, "utf8");
   }
 
-  console.log("Please provide an input file name or pipe input via stdin.");
+  console.error(
+    "\x1b[31m%s\x1b[0m",
+    `Error: Please provide an input file name or pipe input via stdin.`,
+  );
   process.exit(1);
 }
 
